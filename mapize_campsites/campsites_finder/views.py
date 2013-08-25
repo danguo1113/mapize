@@ -27,8 +27,13 @@ def submit_form(request):
         form = SubmitURLForm(request.POST)
         if form.is_valid():
             # Do stuff
+            context = {'unknown_url':False}
             url_to_crawl = form.cleaned_data['url_to_crawl']
-            lst_of_locations = crawl_for_lst.get_lst_of_locations(url_to_crawl)
+            try:
+                lst_of_locations = crawl_for_lst.get_lst_of_locations(url_to_crawl)
+            except ValueError, SyntaxError:
+                context['unknown_url'] = True
+                return render_to_response('crawl_result.html',context_instance=RequestContext(request,context))
             location_lst_formatted = create_location_lst(lst_of_locations)
             print location_lst_formatted
             context = {'location_lst_formatted':location_lst_formatted}

@@ -6,11 +6,12 @@ import json
 
 def format_lst_of_locations(lst_of_locations):
     formatted_lst = []
-    for i in range(2):                
-        lst_of_locations.pop(0)
+    # for i in range(2):                
+    #     lst_of_locations.pop(0)
     for elem in lst_of_locations:
         elem_str_split = re.split('[0-9_]+. ',elem.string)
-        formatted_lst.append(elem_str_split[1])
+        if len(elem_str_split) >= 2:
+            formatted_lst.append(elem_str_split[1])
     return formatted_lst
 
 

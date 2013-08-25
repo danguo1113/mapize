@@ -7,6 +7,9 @@
           type="text/javascript"></script>
 </head> 
 <body>
+{% if unknown_url %}
+Error: Unknown url
+{% else %}
   <div id="map" style="width: 1000px; height: 600px;"></div>
 
   <script type="text/javascript">
@@ -44,6 +47,8 @@
         }
       })(marker, i));
     }
+
   </script>
+{% endif %}
 </body>
 </html>
