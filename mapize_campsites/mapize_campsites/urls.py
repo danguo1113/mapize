@@ -9,6 +9,7 @@ from campsites_finder import views
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', views.home),
+    url(r'^submit/$', views.submit_form),
     # url(r'^mapize_campsites/', include('mapize_campsites.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
