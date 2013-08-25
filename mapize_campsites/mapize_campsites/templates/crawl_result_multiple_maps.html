@@ -1,0 +1,56 @@
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />  
+<style type="text/css">  
+  html { height: 100% }  
+  body { height: 100%; margin: 0px; padding: 0px }  
+  #map_canvas { height: 100% }  
+</style>  
+  <meta charset="utf-8">
+  <style>
+  html, body, #map-canvas {
+    margin: 0;
+    padding: 30;
+    height: 100%;
+  }
+  </style>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+  <script>
+  var map;
+
+   function initialize() {  
+    var latlng = new google.maps.LatLng(37.869565, -122.258786);  
+    var myOptions = {  
+      zoom: 17,  
+      center: latlng,  
+      mapTypeId: google.maps.MapTypeId.ROADMAP  
+    };  
+      
+    var map = new google.maps.Map(document.getElementById("map_canvas"),  
+        myOptions);  
+  
+    // Creating a marker and positioning it on the map    
+    var marker = new google.maps.Marker({    
+      position: new google.maps.LatLng(37.869565, -122.258786),    
+      map: map    
+    });  
+  
+  
+  }  
+  
+</script> 
+
+</head>
+<!--
+{% for key,value in location_to_lat_lon_dict.items %}
+<li><b>{{ key }}</b>: {{value.lat}}, {{value.lng}}</li>
+{% endfor %}-->
+
+{% for key,value in location_to_lat_lon_dict.items %}
+<h1>{{key}}</h1>
+<body onload="initialize({{value.lat}},{{value.lng}})">  
+  <div id="map_canvas" style="width:80%; height:80%"></div>  
+</body> 
+{% endfor %}
+
+</html>
