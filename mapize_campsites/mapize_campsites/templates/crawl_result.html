@@ -4,16 +4,16 @@
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
   <title>Google Maps Multiple Markers</title> 
   <script src="http://maps.google.com/maps/api/js?sensor=false" 
-          type="text/javascript"></script>
+  type="text/javascript"></script>
 </head> 
 <body>
-{% if unknown_url %}
-Error: Unknown url
-{% else %}
+  {% if unknown_url %}
+  Error: Unknown url
+  {% else %}
   <div id="map" style="width: 1000px; height: 600px;"></div>
 
   <script type="text/javascript">
-  	var locations = {{ location_lst_formatted|safe }}
+  var locations = {{ location_lst_formatted|safe }}
 
 
     // var locations = [
@@ -48,7 +48,7 @@ Error: Unknown url
       })(marker, i));
     }
 
-  </script>
-{% endif %}
-</body>
-</html>
+    </script>
+    {% endif %}
+  </body>
+  </html>
