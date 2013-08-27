@@ -4,7 +4,10 @@ from django import forms
 import crawl_for_lst
 
 class SubmitURLForm(forms.Form):
-    url_to_crawl = forms.CharField()
+    url_to_crawl1 = forms.CharField()
+    url_to_crawl2 = forms.CharField(required=False)
+    url_to_crawl3 = forms.CharField(required=False)
+    url_to_crawl4 = forms.CharField(required=False)
 
 def create_location_lst(lst_of_locations):
     location_lst_formatted = []
@@ -23,17 +26,29 @@ def create_location_lst(lst_of_locations):
     return location_lst_formatted
 
 def submit_form(request):
+    NUM_URLS_TO_CRAWL = 4
     if request.method == 'POST':
         form = SubmitURLForm(request.POST)
         if form.is_valid():
             # Do stuff
+            lst_of_urls = []
             context = {'unknown_url':False}
-            url_to_crawl = form.cleaned_data['url_to_crawl']
-            try:
-                lst_of_locations = crawl_for_lst.get_lst_of_locations(url_to_crawl)
-            except ValueError, SyntaxError:
-                context['unknown_url'] = True
-                return render_to_response('crawl_result.html',context_instance=RequestContext(request,context))
+            lst_of_urls.append(form.cleaned_data['url_to_crawl1'])
+            lst_of_urls.append(form.cleaned_data['url_to_crawl2'])
+            lst_of_urls.append(form.cleaned_data['url_to_crawl3'])
+            lst_of_urls.append(form.cleaned_data['url_to_crawl4'])
+            lst_of_locations = []
+            for url in lst_of_urls:
+                try:
+                    lst_of_locations += crawl_for_lst.get_lst_of_locations(url)
+                except ValueError, SyntaxError:
+                    print 'No data for ' + url
+
+            if len(lst_of_locations) == 0:
+                    context = {}
+                    context['unknown_url'] = True
+                    return render_to_response('crawl_result.html',context_instance=RequestContext(request,context))
+
             location_lst_formatted = create_location_lst(lst_of_locations)
             print location_lst_formatted
             context = {'location_lst_formatted':location_lst_formatted}
